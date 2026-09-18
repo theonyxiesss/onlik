@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#080e0b">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATRIX Agency — Шпаргалка чаттера</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap');
+
+:root {
+  --mg: #4caf6e;
+  --dark: #080e0b;
+  --card: #0c1410;
+  --border: rgba(76,175,110,0.12);
+  --border-hi: rgba(76,175,110,0.35);
+  --text: #c8e8d8;
+  --dim: #5a8a6a;
+  --dimmer: #2e5040;
+  --red: #d05050;
+  --gold: #b8d440;
+  /* Emil easing */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--dark);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* SCANLINE */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(76,175,110,0.015) 2px, rgba(76,175,110,0.015) 4px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* NAV */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0 2rem; height: 46px;
+  background: rgba(6,11,8,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+.nav-brand { color: var(--mg); letter-spacing: 0.2em; }
+.site-nav a { color: var(--dim); text-decoration: none; padding: 0.2rem 0.6rem; border-radius: 2px; transition: color 0.15s; }
+.site-nav a:hover { color: var(--mg); }
+.nav-spacer { flex: 1; }
+.nav-active {
+  color: var(--mg);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.8rem;
+  border-radius: 2px;
+}
+
+/* WRAP */
+.wrap { position: relative; z-index: 2; padding-top: 46px; }
+
+/* ── COVER ── */
+.cover {
+  min-height: 60vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 5rem 2rem 4rem;
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(76,175,110,0.14) 0%, transparent 65%),
+    var(--dark);
+}
+.cover::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(76,175,110,0.012) 80px, rgba(76,175,110,0.012) 81px),
+              repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(76,175,110,0.012) 80px, rgba(76,175,110,0.012) 81px);
+  pointer-events: none;
+}
+.cover-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.3em;
+  color: var(--dimmer); text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+.cover h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2.2rem, 6vw, 4.8rem);
+  font-weight: 900;
+  color: var(--mg);
+  letter-spacing: 0.08em;
+  line-height: 1.0;
+  text-shadow: 0 0 60px rgba(76,175,110,0.25);
+  margin-bottom: 1rem;
+}
+.cover-sub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem; letter-spacing: 0.15em;
+  color: var(--dim); line-height: 1.9;
+  max-width: 480px;
+}
+
+/* ── PAGE ── */
+.page { max-width: 1040px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+/* ── CHAPTER ── */
+.chapter { padding: 5rem 0 0; }
+.chapter-num {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(76,175,110,0.12);
+  line-height: 1;
+  margin-bottom: -1.5rem;
+  user-select: none;
+  letter-spacing: -0.02em;
+}
+.chapter-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.25em;
+  color: var(--dim); text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.chapter-tag::before { content: '// '; }
+.chapter h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.1rem, 2.8vw, 1.8rem);
+  font-weight: 700;
+  color: var(--mg);
+  text-shadow: 0 0 20px rgba(76,175,110,0.18);
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 1.6rem 1.8rem;
+  position: relative;
+}
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 2px; height: 100%;
+  background: var(--dimmer);
+}
+.card.hi::before { background: var(--mg); box-shadow: 0 0 8px rgba(76,175,110,0.4); }
+.card.red::before { background: var(--red); }
+.card.gold::before { background: var(--gold); }
+.card.flat { background: transparent; border-color: var(--border); }
+
+.card-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.18em;
+  color: var(--dimmer); text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.card h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.85rem; font-weight: 700;
+  color: var(--mg);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.03em;
+}
+.card h3.red { color: var(--red); text-shadow: 0 0 10px rgba(208,80,80,0.3); }
+.card h3.gold { color: var(--gold); }
+.card p {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem; color: var(--dim); line-height: 1.85;
+}
+.card .big-val {
+  font-family: 'Orbitron', monospace;
+  font-size: 2rem; font-weight: 900;
+  color: var(--mg);
+  text-shadow: 0 0 20px rgba(76,175,110,0.35);
+  line-height: 1.1; margin-bottom: 0.3rem;
+}
+.card .big-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem; color: var(--dim);
+  letter-spacing: 0.12em;
+}
+
+/* GRID */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; }
+.g2-3 { display: grid; grid-template-columns: 2fr 1fr; gap: 1.2rem; }
+.gap { gap: 1.2rem !important; }
+
+/* ── TIMELINE ── */
+.timeline { display: flex; flex-direction: column; }
+.tl-row {
+  display: grid; grid-template-columns: 3rem 1fr;
+  gap: 1.2rem; align-items: start;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.tl-row:last-child { border-bottom: none; }
+.tl-n {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.4rem; font-weight: 900;
+  color: var(--mg);
+  text-shadow: 0 0 12px rgba(76,175,110,0.35);
+  line-height: 1; padding-top: 0.1rem;
+}
+.tl-t {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.74rem; color: var(--mg);
+  letter-spacing: 0.05em; margin-bottom: 0.15rem;
+}
+.tl-d {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.67rem; color: var(--dim);
+  line-height: 1.75;
+}
+
+/* ── OBJECTIONS ── */
+.obj { border-bottom: 1px solid var(--border); padding: 1.4rem 0; }
+.obj:first-child { padding-top: 0; }
+.obj:last-child { border-bottom: none; padding-bottom: 0; }
+.obj-trigger {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem; color: var(--red);
+  letter-spacing: 0.06em; margin-bottom: 0.55rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.obj-trigger::before { content: 'ФАН →'; color: var(--dimmer); }
+.obj-answer {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem; color: var(--text);
+  line-height: 1.85;
+}
+.obj-answer::before { content: '"'; color: var(--mg); }
+.obj-answer::after { content: '"'; color: var(--mg); }
+
+/* ── STOP WORDS ── */
+.stop-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.sw {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+.sw-mid { background: rgba(208,80,80,0.08); border: 1px solid rgba(208,80,80,0.2); color: #c07070; }
+.sw-hard { background: rgba(208,80,80,0.16); border: 1px solid rgba(208,80,80,0.45); color: #ff9090; font-weight: 600; }
+
+/* ── PPV LADDER ── */
+.ladder {
+  display: flex; flex-direction: column; gap: 1px;
+}
+.ladder-row {
+  display: grid; grid-template-columns: 7rem 1fr;
+  align-items: center; gap: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.ladder-price {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--mg);
+  text-shadow: 0 0 12px rgba(76,175,110,0.3);
+  padding: 1.1rem 1.4rem;
+  border-right: 1px solid var(--border);
+  background: rgba(76,175,110,0.04);
+}
+.ladder-row:nth-child(2) .ladder-price { opacity: 0.75; }
+.ladder-row:nth-child(3) .ladder-price { opacity: 0.55; }
+.ladder-desc {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem; color: var(--dim);
+  line-height: 1.8; padding: 1rem 1.4rem;
+}
+.ladder-desc strong { color: var(--text); }
+
+/* ── DIVIDER ── */
+.chapter-div {
+  border: none;
+  border-top: 1px solid rgba(76,175,110,0.07);
+  margin: 0;
+}
+
+/* ── FOOTER ── */
+.sp-footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--dimmer);
+  letter-spacing: 0.18em;
+}
+
+/* ── READING PROGRESS ── */
+#read-progress {
+  position: fixed; top: 0; left: 0; z-index: 200;
+  height: 2px; width: 0%;
+  background: linear-gradient(90deg, rgba(76,175,110,0.5), var(--mg));
+  transition: width 80ms linear;
+  pointer-events: none;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out);
+  will-change: opacity, transform;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* chapter-num slides in from left + stroke fades */
+.reveal-num {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+  will-change: opacity, transform;
+}
+.reveal-num.visible { opacity: 1; transform: translateX(0); }
+
+/* cover elements */
+.reveal-cover {
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+}
+.reveal-cover.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+/* ── HOVER — gated to pointer devices ── */
+@media (hover: hover) and (pointer: fine) {
+  .card {
+    transition: transform 200ms var(--ease-out),
+                opacity   200ms var(--ease-out),
+                border-color 200ms var(--ease-out),
+                box-shadow 200ms var(--ease-out);
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(76,175,110,0.26);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+  }
+  .card.hi:hover  { box-shadow: 0 8px 32px rgba(76,175,110,0.12); }
+  .card.red:hover { box-shadow: 0 8px 28px rgba(208,80,80,0.1); }
+  .card.gold:hover{ box-shadow: 0 8px 28px rgba(184,212,64,0.08); }
+
+  .ladder-row {
+    transition: transform 180ms var(--ease-out),
+                background 180ms var(--ease-out);
+  }
+  .ladder-row:hover { transform: translateX(4px); background: rgba(76,175,110,0.04); }
+  .ladder-row:hover .ladder-price {
+    transform: scale(1.13);
+    text-shadow: 0 0 28px rgba(76,175,110,0.9), 0 0 56px rgba(76,175,110,0.35);
+  }
+
+  .sw {
+    transition: transform 120ms var(--ease-out),
+                opacity   120ms var(--ease-out),
+                box-shadow 120ms var(--ease-out);
+  }
+  .sw:hover { transform: scale(1.06); opacity: 0.9; }
+  .sw-hard:hover { box-shadow: 0 0 10px rgba(208,80,80,0.35); }
+
+  .tl-row {
+    transition: background 160ms var(--ease-out);
+  }
+  .tl-row:hover { background: rgba(76,175,110,0.03); }
+
+  .obj {
+    transition: background 160ms var(--ease-out);
+  }
+  .obj:hover { background: rgba(76,175,110,0.025); }
+
+  /* nav link */
+  .site-nav a {
+    transition: color 120ms var(--ease-out), background 120ms var(--ease-out);
+  }
+  .site-nav a:hover { color: var(--mg); background: rgba(76,175,110,0.06); }
+
+  .chapter-num:hover {
+    animation: glitch-sweep 0.48s var(--ease-out);
+    cursor: default;
+  }
+}
+
+/* ── ACTIVE PRESS ── */
+.card:active      { transform: scale(0.98); }
+.ladder-row:active{ transform: scale(0.99); }
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-num, .reveal-cover {
+    opacity: 1 !important; transform: none !important;
+    transition: none !important;
+  }
+  #read-progress { transition: none !important; }
+  .card, .ladder-row, .sw, .tl-row, .obj { transition: none !important; }
+  .chapter-num { animation: none !important; }
+  #matrix-rain { display: none !important; }
+}
+
+/* ── LADDER PRICE SCALE ── */
+.ladder-price {
+  transition: transform 200ms var(--ease-out),
+              text-shadow 200ms var(--ease-out);
+}
+
+/* ── GLITCH KEYFRAMES ── */
+@keyframes glitch-sweep {
+  0%,100% { transform: none; filter: none; }
+  10%  { transform: translateX(5px) skewX(0.4deg);
+          filter: drop-shadow(3px 0 0 rgba(255,50,50,0.6))
+                  drop-shadow(-3px 0 0 rgba(50,200,255,0.5)); }
+  22%  { transform: translateX(-4px);
+          filter: drop-shadow(-2px 0 0 rgba(255,60,60,0.5)); }
+  34%  { transform: translateX(3px) skewX(-0.3deg);
+          filter: drop-shadow(2px 0 0 rgba(50,200,255,0.4)); }
+  50%  { transform: translateX(-1px); filter: none; }
+  62%  { transform: none; filter: none; }
+}
+
+/* ── OBJ TYPING CURSOR ── */
+.obj-trigger.typing::after {
+  content: '▌';
+  color: var(--mg);
+  animation: blink-cur 0.55s step-end infinite;
+  margin-left: 1px;
+  font-size: 0.85em;
+}
+@keyframes blink-cur {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0; }
+}
+
+/* ── CANVAS LAYERING ── */
+#matrix-rain {
+  position: absolute; inset: 0;
+  z-index: 0; pointer-events: none;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+.cover-label, .cover h1, .cover-sub {
+  position: relative; z-index: 1;
+}
+
+/* ── PARTICLES ── */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--mg);
+  pointer-events: none;
+  z-index: 0;
+  box-shadow: 0 0 5px rgba(76,175,110,0.5);
+}
+@keyframes float-p {
+  0%   { transform: translate(0,0) scale(1); opacity: 0; }
+  12%  { opacity: var(--op); }
+  88%  { opacity: var(--op); }
+  100% { transform: translate(var(--tx),var(--ty)) scale(0.6); opacity: 0; }
+}
+
+/* ── FLICKER OVERLAY ── */
+#flicker-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  pointer-events: none;
+  background: transparent;
+  transition: background 35ms;
+}
+#flicker-overlay.flick {
+  background: rgba(8,14,11,0.11);
+}
+#flicker-overlay::after {
+  content: '';
+  position: absolute; left: 0; right: 0;
+  height: 1px;
+  background: rgba(76,175,110,0.18);
+  transform: translateY(-5px);
+}
+#flicker-overlay.flick::after {
+  animation: scanline-pass 0.25s ease-in forwards;
+}
+@keyframes scanline-pass {
+  0%   { transform: translateY(0); opacity: 0.7; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* ── DECODE TEXT ── */
+.cover-sub.decoding {
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  .g2, .g3, .g2-3 { grid-template-columns: 1fr; gap: 1px; }
+  .chapter-num { font-size: clamp(3rem, 15vw, 5rem); }
+  .ladder-row { grid-template-columns: 5.5rem 1fr; }
+  .ladder-price { font-size: 0.9rem; padding: 0.9rem 1rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="read-progress"></div>
+<div id="flicker-overlay"></div>
+<nav class="site-nav">
+  <span class="nav-brand">▶ MATRIX</span>
+  <a href="index.html" style="margin-left:1rem;">Все модули</a>
+  <span class="nav-spacer"></span>
+  <span class="nav-active">Шпаргалка</span>
+</nav>
+
+<div class="wrap">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label reveal-cover">Matrix Agency · Chatter School · Quick Reference</div>
+  <h1 class="reveal-cover" style="transition-delay:80ms">ШПАРГАЛКА<br>ЧАТТЕРА</h1>
+  <div class="cover-sub reveal-cover" style="transition-delay:160ms">
+    Всё что нужно — на одной странице.<br>
+    Держи открытой во время смены.
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ════════════════════════════════ 01 ТАЙМИНГИ -->
+  <div class="chapter">
+    <div class="chapter-num reveal-num">01</div>
+    <div class="chapter-tag reveal" style="transition-delay:60ms">Первый контакт</div>
+    <h2 class="reveal" style="transition-delay:120ms">Тайминги — окно не ждёт</h2>
+
+    <div class="g3">
+      <div class="card hi reveal" style="transition-delay:180ms">
+        <div class="card-tag">Шаг 0</div>
+        <div class="big-val">АВТО</div>
+        <div class="big-label">Велкам</div>
+        <p style="margin-top:1rem;">Платформа отправляет автоматически. Фан знает что это шаблон — твоя задача дать живое сообщение сразу после.</p>
+      </div>
+      <div class="card gold reveal" style="transition-delay:230ms">
+        <div class="card-tag">Шаг 1</div>
+        <div class="big-val">≤&nbsp;1&nbsp;мин</div>
+        <div class="big-label">Приветка</div>
+        <p style="margin-top:1rem;">По имени, нику или аватарке. Индивидуально. Именно это создаёт ощущение живого человека, а не бота.</p>
+      </div>
+      <div class="card reveal" style="transition-delay:280ms">
+        <div class="card-tag">Шаг 2</div>
+        <div class="big-val">2–3&nbsp;мин</div>
+        <div class="big-label">Добивка</div>
+        <p style="margin-top:1rem;">Если нет реакции на приветку. Мягко — с интригой. Пропустил окно = фан уже переключился на другую модель.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="chapter-div" style="margin-top:5rem;">
+
+  <!-- ════════════════════════════════ 02 СТРУКТУРА -->
+  <div class="chapter">
+    <div class="chapter-num reveal-num">02</div>
+    <div class="chapter-tag reveal" style="transition-delay:60ms">Структура чата</div>
+    <h2 class="reveal" style="transition-delay:120ms">7 шагов от приветки до продажи</h2>
+
+    <div class="g2-3 gap">
+      <div class="card reveal" style="padding: 0; transition-delay:180ms">
+        <div class="timeline" style="padding: 0.5rem 0;">
+          <div class="tl-row" style="padding: 1rem 1.8rem;">
+            <div class="tl-n">1</div>
+            <div><div class="tl-t">Приветка — ≤ 1 минута</div><div class="tl-d">По имени / нику / аватарке. Никогда не копипаст.</div></div>
+          </div>
+          <div class="tl-row" style="padding: 1rem 1.8rem;">
+            <div class="tl-n">2</div>
+            <div><div class="tl-t">Флирт — 3–5 сообщений</div><div class="tl-d">Строится на том что фан уже сказал. Живой диалог, не скрипт.</div></div>
+          </div>
+          <div class="tl-row" style="padding: 1rem 1.8rem;">
+            <div class="tl-n">3</div>
+            <div><div class="tl-t">Фри фото × 2</div><div class="tl-d">Тизер перед продажей. Не отдавай лучшее сразу — разогрей.</div></div>
+          </div>
+          <div class="tl-row" style="padding: 1rem 1.8rem;">
+            <div class="tl-n">4</div>
+            <div><div class="tl-t">Первый PPV (≥ 8 сообщений)</div><div class="tl-d">Расскажи словами что внутри. Имя фана перед отправкой.</div></div>
+          </div>
+          <div class="tl-row" style="padding: 1rem 1.8rem;">
+            <div class="tl-n">5</div>
+            <div><div class="tl-t">Поднять импульс между паками</div><div class="tl-d">3–5 сочных сообщений + 1 фри. Не молчи после покупки.</div></div>
+          </div>
+          <div class="tl-row" style="padding: 1rem 1.8rem;">
+            <div class="tl-n">6</div>
+            <div><div class="tl-t">Закидушка-вопрос</div><div class="tl-d">"Хочешь увидеть продолжение?" — фан отвечает ДА.</div></div>
+          </div>
+          <div class="tl-row" style="padding: 1rem 1.8rem;">
+            <div class="tl-n">7</div>
+            <div><div class="tl-t">Второй PPV — дороже первого</div><div class="tl-d">Содержание лучше предыдущего. Лестница работает.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:1.2rem;">
+        <div class="card hi reveal" style="transition-delay:230ms">
+          <div class="card-tag">Главное правило</div>
+          <h3>Не копипаст — комментируй</h3>
+          <p>Смотри что пишет фан → добавляй своё с вопросом. Фан должен чувствовать что он один такой.</p>
+        </div>
+        <div class="card gold reveal" style="transition-delay:280ms">
+          <div class="card-tag">Имя фана</div>
+          <h3>Раз в 4–6 сообщений</h3>
+          <p>Чаще — навязчиво, реже — эффект теряется. <strong style="color:var(--text);">Всегда перед PPV.</strong></p>
+        </div>
+        <div class="card reveal" style="transition-delay:330ms">
+          <div class="card-tag">После покупки</div>
+          <h3>Не молчи</h3>
+          <p>"Что понравилось больше всего?" — фан отвечает развёрнуто. Данные для следующей сессии. LTV растёт.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="chapter-div" style="margin-top:5rem;">
+
+  <!-- ════════════════════════════════ 03 ЦЕНООБРАЗОВАНИЕ -->
+  <div class="chapter">
+    <div class="chapter-num reveal-num">03</div>
+    <div class="chapter-tag reveal" style="transition-delay:60ms">Ценообразование</div>
+    <h2 class="reveal" style="transition-delay:120ms">PPV — читай фана, не флаг</h2>
+
+    <div class="g2 gap" style="margin-bottom:1.2rem;">
+      <div class="card reveal" style="transition-delay:180ms">
+        <div class="card-tag">Как оценить фана</div>
+        <h3>Три сигнала платёжеспособности</h3>
+        <p>
+          <strong style="color:var(--text);">Работа</strong> — менеджер, врач, IT = высокий бюджет.<br>
+          <strong style="color:var(--text);">Вовлечённость</strong> — отвечает быстро, пишет много = горячий.<br>
+          <strong style="color:var(--text);">История</strong> — что уже купил, сколько потратил на OF раньше.
+        </p>
+      </div>
+      <div class="card hi reveal" style="transition-delay:240ms">
+        <div class="card-tag">Принцип лестницы</div>
+        <h3>Каждый пак дороже предыдущего</h3>
+        <p>Тизер → мягкий контент → эксклюзив. Содержание улучшается вместе с ценой. Фан платит за прогресс.</p>
+      </div>
+    </div>
+
+    <div class="ladder">
+      <div class="ladder-row">
+        <div class="ladder-price">$12–15</div>
+        <div class="ladder-desc"><strong>Первый пак.</strong> Прогретый фан, 8+ сообщений. Менеджер, IT, хорошая работа. Высокий отклик в переписке.</div>
+      </div>
+      <div class="ladder-row">
+        <div class="ladder-price">$8–10</div>
+        <div class="ladder-desc"><strong>Первый пак.</strong> Фан менее прогрет или сигналы бюджета средние. Лучше начать ниже и поднять на втором паке.</div>
+      </div>
+      <div class="ladder-row">
+        <div class="ladder-price">$ ?</div>
+        <div class="ladder-desc"><strong>Фан не выяснен.</strong> Сначала узнай работу, образ жизни, чем занимается. Потом предлагай цену.</div>
+      </div>
+    </div>
+
+    <div class="card red reveal" style="margin-top:1.2rem;transition-delay:180ms">
+      <div class="card-tag">Абсолютное правило</div>
+      <h3 class="red">Ниже минимума агентства — ЗАПРЕЩЕНО</h3>
+      <p>Снижать цену без разрешения руководителя = нарушение. Всегда ставь среднее из диапазона — будет зазор для скидки если нужно торговаться.</p>
+    </div>
+  </div>
+
+  <hr class="chapter-div" style="margin-top:5rem;">
+
+  <!-- ════════════════════════════════ 04 ВОЗРАЖЕНИЯ -->
+  <div class="chapter">
+    <div class="chapter-num reveal-num">04</div>
+    <div class="chapter-tag reveal" style="transition-delay:60ms">Работа с возражениями</div>
+    <h2 class="reveal" style="transition-delay:120ms">Фан говорит — у тебя всегда есть ответ</h2>
+
+    <div class="card flat reveal" style="padding:0;transition-delay:180ms">
+      <div class="obj">
+        <div class="obj-trigger">Дорого / Это слишком много</div>
+        <div class="obj-answer">Понимаю, Mike 😏 специально для тебя — $12 вместо $15, это наш маленький секрет 🤫</div>
+      </div>
+      <div class="obj">
+        <div class="obj-trigger">Потом / Может позже / Не сейчас</div>
+        <div class="obj-answer">Ты уже так близко 🔥 я держала это специально для тебя — как только уйдёт, не смогу повторить 😔</div>
+      </div>
+      <div class="obj">
+        <div class="obj-trigger">Нет денег / I'm broke</div>
+        <div class="obj-answer">Окей, тогда покажу кое-что бесплатно — просто чтобы ты знал что тебя ждёт 😘 [фри тизер → вернись с оффером позже]</div>
+      </div>
+      <div class="obj">
+        <div class="obj-trigger">Молчит после PPV / Игнор</div>
+        <div class="obj-answer">Эй, я тут 😅 хотела спросить — всё ок? мне важно знать как ты 🧡 [не требуй, создай безопасность]</div>
+      </div>
+    </div>
+
+    <div class="card gold reveal" style="margin-top:1.2rem;transition-delay:240ms">
+      <div class="card-tag">Золотое правило скидки</div>
+      <h3 class="gold">Всегда давай причину — никогда просто так</h3>
+      <p>"Специально для тебя", "только сейчас", "наш секрет". Фан должен чувствовать особое отношение — не что ты отчаялась продать.</p>
+    </div>
+  </div>
+
+  <hr class="chapter-div" style="margin-top:5rem;">
+
+  <!-- ════════════════════════════════ 05 FAN NOTES -->
+  <div class="chapter">
+    <div class="chapter-num reveal-num">05</div>
+    <div class="chapter-tag reveal" style="transition-delay:60ms">Fan Notes</div>
+    <h2 class="reveal" style="transition-delay:120ms">Заметки о фане — твоя CRM</h2>
+
+    <div class="g2 gap">
+      <div class="card hi reveal" style="transition-delay:180ms">
+        <div class="card-tag">Что записывать</div>
+        <h3>После каждого нового факта</h3>
+        <p>
+          Страна / штат · Работа · Хобби<br>
+          Семейное положение · Наличие авто<br>
+          Фетиши и предпочтения<br>
+          Что покупал · Сколько потратил<br>
+          Как проводит выходные / вечера<br>
+          Когда чаще заходит на OF
+        </p>
+      </div>
+      <div class="card reveal" style="transition-delay:240ms">
+        <div class="card-tag">Где найти</div>
+        <h3>Messages → Fan's Overview → Fan Notes → + Note</h3>
+        <p style="margin-bottom:1.2rem;">Заполняй сразу — не жди конца смены. Факты забываются.</p>
+        <div class="card-tag">Зачем</div>
+        <p>Постоянный фан приносит в 5–10× больше чем новый. Каждая заметка — это точнее следующая продажа.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="chapter-div" style="margin-top:5rem;">
+
+  <!-- ════════════════════════════════ 06 СТОП-СЛОВА -->
+  <div class="chapter">
+    <div class="chapter-num reveal-num">06</div>
+    <div class="chapter-tag reveal" style="transition-delay:60ms">Правила платформы</div>
+    <h2 class="reveal" style="transition-delay:120ms">Запрещённые слова — аккаунт заморозят</h2>
+
+    <div class="g2 gap" style="margin-bottom:1.2rem;">
+      <div class="card red reveal" style="transition-delay:180ms">
+        <div class="card-tag">Нельзя писать в чате</div>
+        <div class="stop-grid" style="margin-top:0.8rem;">
+          <span class="sw sw-mid">squirt</span>
+          <span class="sw sw-mid">meet</span>
+          <span class="sw sw-mid">pee</span>
+          <span class="sw sw-mid">toilet</span>
+          <span class="sw sw-mid">shit</span>
+          <span class="sw sw-mid">poop</span>
+          <span class="sw sw-mid">drunk</span>
+          <span class="sw sw-mid">drugs</span>
+          <span class="sw sw-hard">telegram</span>
+          <span class="sw sw-hard">whatsapp</span>
+          <span class="sw sw-hard">kid</span>
+          <span class="sw sw-hard">child</span>
+          <span class="sw sw-hard">under 18</span>
+          <span class="sw sw-hard">young</span>
+          <span class="sw sw-hard">diapers</span>
+          <span class="sw sw-mid">fuck off</span>
+          <span class="sw sw-mid">fuck you</span>
+          <span class="sw sw-mid">bastard</span>
+        </div>
+      </div>
+      <div class="card reveal" style="border-left: 2px solid var(--red);transition-delay:240ms">
+        <div class="card-tag">Абсолютный запрет — бан без восстановления</div>
+        <h3 class="red">Никогда, ни в каком контексте</h3>
+        <p>
+          Несовершеннолетние в любой теме<br>
+          Зоофилия / педофилия<br>
+          Некрофилия<br>
+          Членовредительство / суицид<br>
+          Наркотики в позитивном свете
+        </p>
+      </div>
+    </div>
+
+    <div class="card reveal" style="transition-delay:180ms">
+      <div class="card-tag">Как уйти от запрещённой темы</div>
+      <h3>Мягко — без агрессии</h3>
+      <p>"Эта страница нужна мне именно для воплощения тайных фантазий — и именно здесь я продаю контент" → переводи тему на безопасный флирт. Не объясняй почему нельзя — просто уводи.</p>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<div class="sp-footer">
+  MATRIX AGENCY · CHATTER SCHOOL · QUICK REFERENCE · CONFIDENTIAL
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+(function(){
+  if (!localStorage.getItem('operator_name')) window.location.href = 'index.html';
+})();
+</script>
+<script>
+// ── Reading progress bar ──
+(function(){
+  var bar = document.getElementById('read-progress');
+  if (!bar) return;
+  function updateBar() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docH = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var pct = docH > 0 ? (scrollTop / docH) * 100 : 0;
+    bar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateBar, { passive: true });
+  updateBar();
+})();
+
+// ── Scroll reveal (IntersectionObserver) ──
+(function(){
+  // Immediately show cover reveals (already in viewport)
+  document.querySelectorAll('.reveal-cover').forEach(function(el) {
+    requestAnimationFrame(function(){
+      el.classList.add('visible');
+    });
+  });
+
+  // Observe everything else
+  var selectors = '.reveal, .reveal-num';
+  var els = document.querySelectorAll(selectors);
+  if (!els.length) return;
+
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  els.forEach(function(el) { io.observe(el); });
+})();
+</script>
+<script src="fx.js?v=7"></script>
+
+<script>
+// ── Matrix Rain ──
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cover = document.querySelector('.cover');
+  if (!cover) return;
+
+  var canvas = document.createElement('canvas');
+  canvas.id = 'matrix-rain';
+  cover.insertBefore(canvas, cover.firstChild);
+  var ctx = canvas.getContext('2d');
+
+  var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ01MATRIX'.split('');
+  var cols, drops;
+
+  function resize() {
+    canvas.width  = cover.offsetWidth;
+    canvas.height = cover.offsetHeight;
+    cols  = Math.floor(canvas.width / 20);
+    drops = Array.from({length: cols}, function(){ return -(Math.random() * 40); });
+  }
+  resize();
+  if (window.ResizeObserver) new ResizeObserver(resize).observe(cover);
+
+  // Fade in gently
+  setTimeout(function(){ canvas.style.opacity = '0.13'; }, 900);
+
+  var lastFrame = 0;
+  function draw(ts) {
+    requestAnimationFrame(draw);
+    if (ts - lastFrame < 65) return;
+    lastFrame = ts;
+
+    ctx.fillStyle = 'rgba(8,14,11,0.055)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '13px "Share Tech Mono", monospace';
+
+    for (var i = 0; i < cols; i++) {
+      var ch = chars[Math.floor(Math.random() * chars.length)];
+      var alpha = 0.35 + Math.random() * 0.45;
+      ctx.fillStyle = 'rgba(76,175,110,' + alpha + ')';
+      ctx.fillText(ch, i * 20, drops[i] * 20);
+
+      if (drops[i] * 20 > canvas.height && Math.random() > 0.975)
+        drops[i] = -(Math.random() * 20);
+      drops[i] += 0.5;
+    }
+  }
+  requestAnimationFrame(draw);
+})();
+
+// ── Decode text (cover-sub) ──
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var el = document.querySelector('.cover-sub');
+  if (!el) return;
+
+  // Wait for reveal animation to finish
+  setTimeout(function(){
+    var origHTML = el.innerHTML;
+    var origText = el.textContent.replace(/\s+/g, ' ').trim();
+    var glyphs = 'アイウエオカキクケコサシスセソ0123456789!@#%&*MATRIX'.split('');
+
+    var current = origText.split('').map(function(c){
+      return /[\s—.,"']/.test(c) ? c : glyphs[Math.floor(Math.random() * glyphs.length)];
+    });
+
+    el.classList.add('decoding');
+    el.textContent = current.join('');
+
+    var revealIdx = 0, iter = 0;
+    var iv = setInterval(function(){
+      // Scramble unrevealed chars
+      for (var i = revealIdx; i < origText.length; i++) {
+        var c = origText[i];
+        current[i] = /[\s—.,"']/.test(c) ? c : glyphs[Math.floor(Math.random() * glyphs.length)];
+      }
+      // After ~10 scramble frames start revealing
+      if (iter > 9) {
+        var step = iter > 22 ? 2 : 1;
+        for (var s = 0; s < step && revealIdx < origText.length; s++) {
+          current[revealIdx] = origText[revealIdx];
+          revealIdx++;
+        }
+      }
+      el.textContent = current.join('');
+      iter++;
+      if (revealIdx >= origText.length) {
+        clearInterval(iv);
+        el.classList.remove('decoding');
+        el.innerHTML = origHTML; // restore <br>
+      }
+    }, 48);
+  }, 820);
+})();
+
+// ── Scanline Flicker ──
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var overlay = document.getElementById('flicker-overlay');
+  if (!overlay) return;
+
+  function flick() {
+    overlay.classList.add('flick');
+    setTimeout(function(){
+      overlay.classList.remove('flick');
+      // Occasional double-flicker
+      if (Math.random() > 0.6) {
+        setTimeout(function(){
+          overlay.classList.add('flick');
+          setTimeout(function(){ overlay.classList.remove('flick'); }, 50);
+        }, 95);
+      }
+    }, 55);
+    // Next flicker: random 5–14 seconds
+    setTimeout(flick, 5000 + Math.random() * 9000);
+  }
+  setTimeout(flick, 2500 + Math.random() * 3500);
+})();
+
+// ── Particles ──
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cover = document.querySelector('.cover');
+  if (!cover) return;
+
+  function spawn() {
+    var p = document.createElement('div');
+    p.className = 'particle';
+    var size = 1.5 + Math.random() * 2.5;
+    var dur  = 7 + Math.random() * 11;
+    var tx   = (Math.random() - 0.5) * 110;
+    var ty   = (Math.random() - 0.5) * 110;
+    var op   = 0.12 + Math.random() * 0.28;
+    p.style.cssText =
+      'width:' + size + 'px;height:' + size + 'px;' +
+      'left:' + (4 + Math.random() * 92) + '%;' +
+      'top:'  + (4 + Math.random() * 92) + '%;' +
+      '--tx:' + tx + 'px;--ty:' + ty + 'px;--op:' + op + ';' +
+      'animation:float-p ' + dur + 's ease-in-out forwards;';
+    cover.appendChild(p);
+    setTimeout(function(){ if (p.parentNode) p.parentNode.removeChild(p); }, dur * 1000 + 200);
+  }
+
+  // Initial particles staggered
+  for (var i = 0; i < 12; i++) setTimeout(spawn, i * 350);
+  // Ongoing stream
+  setInterval(spawn, 1600);
+})();
+
+// ── Obj Typewriter ──
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var triggers = document.querySelectorAll('.obj-trigger');
+  if (!triggers.length) return;
+
+  var origMap = new Map();
+  triggers.forEach(function(el){ origMap.set(el, el.textContent.trim()); });
+
+  function typewrite(el, text) {
+    el.textContent = '';
+    el.classList.add('typing');
+    var i = 0;
+    var speed = Math.max(18, Math.min(45, 900 / text.length));
+    (function tick(){
+      if (i < text.length) {
+        el.textContent = text.slice(0, ++i);
+        setTimeout(tick, speed);
+      } else {
+        el.classList.remove('typing');
+      }
+    })();
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      var trigger = entry.target.querySelector('.obj-trigger');
+      if (!trigger || trigger.dataset.typed) return;
+      trigger.dataset.typed = '1';
+      var text = origMap.get(trigger) || trigger.textContent.trim();
+      setTimeout(function(){ typewrite(trigger, text); }, 280);
+      io.unobserve(entry.target);
+    });
+  }, { threshold: 0.6 });
+
+  document.querySelectorAll('.obj').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#080e0b">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATRIX Agency — Chatter School</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap');
+
+:root {
+  --mg:#4caf6e;--mg2:#3a8a55;--mg3:#2a6040;--mg4:#1a3a28;
+  --dark:#080e0b;--dark2:#0b130f;--card:#0d1610;--card2:#111d14;
+  --border:rgba(76,175,110,0.15);--border2:rgba(76,175,110,0.07);
+  --text:#d4f0de;--muted:#4a7a5a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden;}
+#matrix-rain{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.13;}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(76,175,110,0.025) 2px,rgba(76,175,110,0.025) 4px);pointer-events:none;z-index:1;}
+.wrap{position:relative;z-index:2;}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem;position:relative;overflow:hidden;
+background:
+  radial-gradient(ellipse 70% 55% at 50% -5%, rgba(76,175,110,0.28) 0%, transparent 65%),
+  radial-gradient(ellipse 40% 35% at 15% 60%, rgba(76,175,110,0.07) 0%, transparent 70%),
+  radial-gradient(ellipse 40% 35% at 85% 60%, rgba(76,175,110,0.07) 0%, transparent 70%),
+  radial-gradient(ellipse 60% 40% at 50% 110%, rgba(76,175,110,0.1) 0%, transparent 60%),
+  var(--dark);}
+.hero::before{content:'MATRIX';position:absolute;font-family:'Orbitron',monospace;font-size:clamp(5rem,18vw,16rem);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(76,175,110,0.12);letter-spacing:0.2em;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;text-shadow:0 0 80px rgba(76,175,110,0.06);}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 50% 50%,rgba(76,175,110,0.04) 0%,transparent 70%);pointer-events:none;animation:heroPulse 4s ease-in-out infinite;}
+@keyframes heroPulse{0%,100%{opacity:0.6;}50%{opacity:1;}}
+.badge{display:inline-flex;align-items:center;gap:0.6rem;border:1px solid var(--border);background:rgba(76,175,110,0.05);padding:0.4rem 1.2rem;border-radius:2px;font-family:'Share Tech Mono',monospace;font-size:0.73rem;color:var(--mg);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:2rem;}
+.badge::before{content:'▶ ';}
+.hero h1{font-family:'Orbitron',monospace;font-size:clamp(2rem,6vw,4.5rem);font-weight:900;line-height:1.0;margin-bottom:0.5rem;color:var(--mg);text-shadow:0 0 40px rgba(76,175,110,0.35);}
+.hero .sub{font-family:'Share Tech Mono',monospace;font-size:clamp(0.75rem,2vw,0.95rem);color:var(--mg3);letter-spacing:0.12em;margin-bottom:0.5rem;}
+.hero .desc{color:var(--muted);font-size:0.85rem;max-width:480px;margin:1rem auto 3rem;font-family:'Share Tech Mono',monospace;line-height:1.7;}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--muted);font-size:0.7rem;font-family:'Share Tech Mono',monospace;display:flex;flex-direction:column;align-items:center;gap:0.4rem;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+.section{max-width:900px;margin:0 auto;padding:5rem 2rem;}
+.sec-label{font-family:'Share Tech Mono',monospace;font-size:0.67rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--mg3);margin-bottom:2rem;}
+.sec-label::before{content:'// ';}
+
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;}
+.mod-card{background:var(--card);border:1px solid var(--border2);border-radius:3px;padding:1.6rem;text-decoration:none;display:block;transition:all 0.2s;position:relative;overflow:hidden;}
+.mod-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--mg3);transition:background 0.2s;}
+.mod-card:hover{border-color:var(--border);background:rgba(76,175,110,0.03);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.35);}
+.mod-card:hover::before{background:var(--mg);}
+.mod-num{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--mg3);letter-spacing:0.12em;margin-bottom:0.6rem;}
+.mod-num::before{content:'// MODULE_';}
+.mod-card h3{font-family:'Orbitron',monospace;font-size:0.88rem;font-weight:700;color:var(--mg);margin-bottom:0.55rem;text-shadow:0 0 10px rgba(76,175,110,0.2);}
+.mod-card p{font-size:0.77rem;color:var(--muted);line-height:1.6;font-family:'Share Tech Mono',monospace;margin-bottom:1.1rem;}
+.mod-cta{font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--mg3);letter-spacing:0.08em;display:inline-flex;align-items:center;gap:0.5rem;transition:color 0.2s;}
+.mod-card:hover .mod-cta{color:var(--mg);}
+.mod-cta-arrow{transition:transform 0.2s;}
+.mod-card:hover .mod-cta-arrow{transform:translateX(3px);}
+
+.matrix-line{text-align:center;font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:rgba(76,175,110,0.13);padding:0.5rem 2rem;letter-spacing:0.1em;overflow:hidden;white-space:nowrap;}
+.footer{text-align:center;padding:3rem 2rem;color:var(--mg4);font-family:'Share Tech Mono',monospace;font-size:0.63rem;letter-spacing:0.12em;border-top:1px solid var(--border2);}
+
+@media(max-width:580px){.modules-grid{grid-template-columns:1fr;}}
+
+.mod-locked{opacity:0.35;pointer-events:none;}
+.mod-lock-badge{display:none;font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;color:#2a6040;letter-spacing:0.08em;margin-top:0.6rem;}
+.mod-locked .mod-lock-badge{display:block;}
+.mod-locked .mod-cta{display:none;}
+
+/* ── ПРОГРЕСС / ДАШБОРД ── */
+.dash-section{display:none;}
+.dash-op{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:#4a9a6a;letter-spacing:0.15em;margin-bottom:1.8rem;}
+.dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
+.dash-card{background:var(--card);border:1px solid var(--border2);border-radius:3px;padding:1.4rem 1.4rem 1.2rem;position:relative;overflow:hidden;}
+.dash-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--mg3);}
+.dash-card.dk-done::before{background:var(--mg);box-shadow:0 0 8px rgba(76,175,110,0.5);}
+.dash-card.dk-locked{opacity:0.38;}
+.dk-num{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:#4a9a6a;letter-spacing:0.12em;margin-bottom:0.4rem;}
+.dk-num::before{content:'// MODULE_';}
+.dk-title{font-family:'Orbitron',monospace;font-size:0.82rem;font-weight:700;color:var(--mg);margin-bottom:0.75rem;text-shadow:0 0 10px rgba(76,175,110,0.2);}
+.dk-status{font-family:'Share Tech Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;}
+.dk-status.st-done{color:var(--mg);}
+.dk-status.st-open{color:#7ab899;}
+.dk-status.st-locked{color:var(--muted);}
+.dk-meta{font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);margin-top:0.7rem;line-height:2;}
+.cheat-btn{display:inline-flex;align-items:center;gap:0.7rem;font-family:'Share Tech Mono',monospace;font-size:0.73rem;color:var(--mg);text-decoration:none;border:1px solid var(--border);padding:0.7rem 1.7rem;border-radius:2px;letter-spacing:0.1em;transition:all 0.2s;background:rgba(76,175,110,0.03);}
+.cheat-btn:hover{background:rgba(76,175,110,0.07);border-color:rgba(76,175,110,0.4);transform:translateX(4px);}
+@media(max-width:700px){.dash-grid{grid-template-columns:1fr;}}
+</style>
+<link rel="stylesheet" href="fx.css?v=7">
+</head>
+<body>
+<canvas id="matrix-rain"></canvas>
+<div class="wrap">
+
+<div class="hero">
+  <div class="badge">Matrix Agency · Chatter School</div>
+  <h1>CHATTER<br>SCHOOL</h1>
+  <div class="sub">// TRAINING_PROGRAM_LOADED //</div>
+  <p class="desc">Система обучения чаттеров Matrix Agency.<br>Три модуля — от интерфейса до закрытия продаж.</p>
+  <div class="scroll-hint">
+    <span>MODULES_BELOW</span>
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--mg3)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+  </div>
+</div>
+
+<div class="matrix-line">01001101 01000001 01010100 01010010 01001001 01011000 00100000 01000011 01001000 01000001 01010100 01010100 01000101 01010010</div>
+
+<div class="section">
+  <div class="sec-label">Программа обучения</div>
+  <div class="modules-grid">
+
+    <a class="mod-card" data-mod="1" href="01-interfeis.html">
+      <div class="mod-num">01</div>
+      <h3>Интерфейс OF</h3>
+      <p>Навигация по платформе: статусы фанов, очередь сообщений, медиабиблиотека, Mass DM и работа с очередью.</p>
+      <span class="mod-cta">Открыть модуль <span class="mod-cta-arrow">→</span></span>
+    </a>
+
+    <a class="mod-card" data-mod="2" href="02-pervyi-kontakt.html">
+      <div class="mod-num">02</div>
+      <h3>Первый контакт</h3>
+      <p>Велкам, приветка, добивка, заметки о фане, имя как психологический триггер, инвайт и правила OF.</p>
+      <span class="mod-cta">Открыть модуль <span class="mod-cta-arrow">→</span></span>
+      <div class="mod-lock-badge">🔒 ЗАБЛОКИРОВАН — пройди предыдущий модуль</div>
+    </a>
+
+    <a class="mod-card" data-mod="3" href="03-prodazhi.html">
+      <div class="mod-num">03</div>
+      <h3>Продажи в чате</h3>
+      <p>Техники продаж в DM: флоу разговора, офферы, работа с возражениями и закрытие на PPV.</p>
+      <span class="mod-cta">Открыть модуль <span class="mod-cta-arrow">→</span></span>
+      <div class="mod-lock-badge">🔒 ЗАБЛОКИРОВАН — пройди предыдущий модуль</div>
+    </a>
+
+  </div>
+</div>
+
+<div class="matrix-line">4d61 7472 6978 2f2f 5072 6f67 7265 7373 5f54 7261 636b 6572 2f2f 4d61 7472 6978</div>
+
+<div class="section dash-section" id="dash-section">
+  <div class="sec-label">Статус обучения</div>
+  <div class="dash-op" id="dash-op"></div>
+  <div class="dash-grid" id="dash-grid"></div>
+</div>
+<div class="section" style="padding-top:0">
+  <a href="spravka.html" class="cheat-btn">📋 Шпаргалка чаттера →</a>
+</div>
+
+<div class="footer">MATRIX AGENCY · CHATTER SCHOOL · CONFIDENTIAL</div>
+
+</div>
+<script>
+const canvas = document.getElementById('matrix-rain');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+const cols = Math.floor(canvas.width / 18);
+const drops = Array(cols).fill(1);
+const chars = '01アイウエオカキクケコマトリクスMATRIX';
+function drawRain() {
+  ctx.fillStyle = 'rgba(0,0,0,0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#4caf6e'; ctx.font = '13px Share Tech Mono,monospace';
+  for (let i = 0; i < drops.length; i++) {
+    const ch = chars[Math.floor(Math.random() * chars.length)];
+    ctx.globalAlpha = Math.random() * 0.7 + 0.3;
+    ctx.fillText(ch, i * 18, drops[i] * 18);
+    ctx.globalAlpha = 1;
+    if (drops[i] * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
+  }
+}
+setInterval(drawRain, 65);
+window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+document.addEventListener('DOMContentLoaded',function(){
+  var m01=localStorage.getItem('matrix_m01_done');
+  var m02=localStorage.getItem('matrix_m02_done');
+  if(!m01){var c=document.querySelector('[data-mod="2"]');if(c)c.classList.add('mod-locked');}
+  if(!m02){var c=document.querySelector('[data-mod="3"]');if(c)c.classList.add('mod-locked');}
+
+  // ── Прогресс-дашборд ──
+  var name=localStorage.getItem('operator_name');
+  if(!name) return;
+  document.getElementById('dash-section').style.display='block';
+  var shift=localStorage.getItem('operator_shift');
+  var sl=shift==='morning'?'УТРО':shift==='evening'?'ВЕЧЕР':shift==='night'?'НОЧЬ':'';
+  document.getElementById('dash-op').textContent='// ОПЕРАТОР: '+name+(sl?' · '+sl:'')+' //';
+  function fmtClock(ms){
+    if(!ms) return '';
+    var d=new Date(parseInt(ms));
+    if(isNaN(d.getTime())) return '';
+    var p=function(n){return n<10?'0'+n:''+n;};
+    return p(d.getHours())+':'+p(d.getMinutes())+' ('+p(d.getDate())+'.'+p(d.getMonth()+1)+')';
+  }
+  var mods=[
+    {n:'01',title:'Интерфейс OF',    id:'m01',dk:'matrix_m01_done',tk:'matrix_m01_time',sk:null,           prev:null},
+    {n:'02',title:'Первый контакт',  id:'m02',dk:'matrix_m02_done',tk:'matrix_m02_time',sk:'matrix_m02_score',prev:'matrix_m01_done'},
+    {n:'03',title:'Продажи в чате',  id:'m03',dk:'matrix_m03_done',tk:'matrix_m03_time',sk:'matrix_m03_score',prev:'matrix_m02_done'},
+  ];
+  var grid=document.getElementById('dash-grid');
+  mods.forEach(function(m){
+    var done=!!localStorage.getItem(m.dk);
+    var locked=m.prev&&!localStorage.getItem(m.prev);
+    var t=localStorage.getItem(m.tk);
+    var score=m.sk?localStorage.getItem(m.sk):null;
+    var startMs=localStorage.getItem('matrix_'+m.id+'_start');
+    var endMs=localStorage.getItem('matrix_'+m.id+'_end');
+    var card=document.createElement('div');
+    card.className='dash-card'+(done?' dk-done':locked?' dk-locked':'');
+    var sCls=done?'st-done':locked?'st-locked':'st-open';
+    var sTxt=done?'[OK] ПРОЙДЕН':locked?'[🔒] ЗАБЛОКИРОВАН':'[—] НЕ ПРОЙДЕН';
+    var meta='';
+    if(startMs) meta+='▶ Начало: '+fmtClock(startMs)+'\n';
+    if(endMs)   meta+='⏹ Конец: '+fmtClock(endMs)+'\n';
+    if(t){var s=parseInt(t);meta+='⏱ '+Math.floor(s/60)+' мин '+(s%60<10?'0':'')+(s%60)+' сек\n';}
+    if(score) meta+='🎯 '+score;
+    card.innerHTML='<div class="dk-num">'+m.n+'</div>'
+      +'<div class="dk-title">'+m.title+'</div>'
+      +'<div class="dk-status '+sCls+'">'+sTxt+'</div>'
+      +(meta?'<div class="dk-meta">'+meta.trim().replace(/\n/g,'<br>')+'</div>':'');
+    grid.appendChild(card);
+  });
+});
+</script>
+<script src="fx.js?v=7"></script>
+</body>
+</html>
